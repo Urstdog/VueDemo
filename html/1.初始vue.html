@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div class="root">
+      <!-- {{name}} 插值语法 -->
+      <h1>Hello, {{name}}</h1>
+      <h2>我所在的学校:{{school.name}}</h2>
+      <h2>学校多大了: {{school.age}}</h2>
+      <a v-bind:href="school.url">点我去学校官网</a><br />
+      <a v-bind:href="url">点我去博客</a><br />
+      <!-- 简写 只有 v-bind: 才能简写成 : -->
+      <a :href="url">点我去博客(简写)</a><br />
+      <!-- 单向数据绑定 -->
+      请输入名字: <input type="text" v-bind:value="name" /><br />
+      <!--
+       双向数据绑定
+       只能应用于表单元素, 如 input select 等, 有输入的元素,
+       更改输入会影响 Vue实例中的属性值
+        -->
+      请输入名字: <input type="text" v-model:value="name" />
+    </div>
+    <script type="text/javascript">
+      //创建vue实例, 参数为一个对象
+      new Vue({
+        el: ".root", //用于指定当前Vue实例为哪一个容器服务, 通常用css选择器
+        data: {
+          name: "黄鹏辉",
+          school: {
+            name: "郑州商学院",
+            url: "http://www.zbu.edu.cn",
+            age: 20,
+          },
+          url: "https://urstdog.github.io/",
+        },
+      });
+    </script>
+  </body>
+</html>
