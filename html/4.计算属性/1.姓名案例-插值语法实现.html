@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>插值语法实现</title>
+		<script src="../../js/vue.js"></script>
+	</head>
+	<body>
+		<div class="root">
+			姓: <input type="text" v-model:value="firstName" /><br /><br />
+			名: <input type="text" v-model:value="lastName" /><br /><br />
+			<!-- firstName.slice(0,3)截取 (0,1,2) 的字符,左闭右开 -->
+			<!-- 当处理的条件多的时候, 代码不易于观察 -->
+			姓名: <span>{{firstName.slice(0,3)}}-{{lastName}}</span>
+		</div>
+
+		<script>
+			new Vue({
+				el: ".root",
+				data: {
+					firstName: "张",
+					lastName: "三",
+				},
+			});
+		</script>
+	</body>
+</html>

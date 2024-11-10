@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>插值语法实现</title>
+		<script src="../../js/vue.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div class="root">
+			姓: <input type="text" v-model:value="firstName" /><br /><br />
+			名: <input type="text" v-model:value="lastName" /><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			<!-- 下面的fullName不会再调用get方法,第一次调用时会建立缓存 -->
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+		</div>
+
+		<script>
+			const vm = new Vue({
+				el: ".root",
+				data: {
+					firstName: "张",
+					lastName: "三",
+				},
+				computed: {
+					//只有只考虑读, 没有修改时, 才可以简写
+					//实际就是get方法
+
+					/* fullName: function () {
+						console.log("get方法被调用");
+						return this.firstName.slice(0, 3) + "-" + this.lastName;
+					}, */
+
+					// 进一步简写
+					fullName() {
+						console.log("get方法被调用");
+						return this.firstName.slice(0, 3) + "-" + this.lastName;
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

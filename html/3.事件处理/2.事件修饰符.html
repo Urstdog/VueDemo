@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="../../js/vue.js"></script>
+		<style>
+			* {
+				margin: 20px;
+			}
+			.demo1 {
+				background-color: blue;
+			}
+			.box1 {
+				background-color: aqua;
+			}
+			.box2 {
+				padding: 8px;
+				background-color: brown;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- vue中的事件修饰符:
+        1.prevent : 阻止默认事件(常用)
+        2.stop : 阻止事件冒泡(常用) 
+        3.once : 事件只触发一次(常用)
+        4.capture: 使用事件的捕获模式(在捕获阶段触发)
+        5.self: 只有 event.target 是当前操作元素时才是触发事件
+        3.passive: 事件的默认行为里脊执行, 无需等待事件回调执行完毕
+        -->
+		<div class="root">
+			<h1>欢迎来到我的世界</h1>
+
+			<!-- 默认会跳转到百度 通过 @click.prevent 阻止跳转-->
+			<a href="http://www.baidu.com" @click.prevent="showInfo">点我去百度(阻止默认事件)</a>
+
+			<!-- 先调用 showInfo1 ,然后又调用showInfo2 ,通过@click.stop 阻止事件冒泡  -->
+			<div class="demo1" @click="showInfo2">
+				<button @click.stop="showInfo1">点我提示信息(阻止事件冒泡)</button>
+			</div>
+
+			<!-- 点击按钮,触发事件, 每次点击都会触发, 通过 @click.once 让事件只触发一次 -->
+			<div class="demo1">
+				<button @click.once="showInfo">点我提示信息(事件只触发一次)</button>
+			</div>
+
+			<!-- 点击div2的事件的过程: 两个阶段
+            1.先捕获: 先 div1, 再 div2 
+            2.再冒泡: 先 div2, 再 div1
+            冒泡阶段执行事件(控制台输出 2,1)
+            通过@click.capture 让div1在捕获阶段就执行事件(控制台输出: 1,2)
+            -->
+			<div class="box1" @click.capture="showMsg1">
+				div1
+				<div class="box2" @click="showMsg2">div2</div>
+			</div>
+
+			<!-- 点击按钮 button 元素
+            1.没加@click.self: 事件冒泡, 先执行 showInfo1, 再执行 showInfo2
+            2.加了@click.self: 先执行 showInfo1, 不会执行showInfo2, 
+            3.原因: 因为 event 不是 div 元素, 是 button元素,只有当点击 div 元素时才会执行              
+            -->
+			<div class="demo1" @click.self="showInfo2">
+				<button @click="showInfo1">点我提示信息(阻止事件冒泡)</button>
+			</div>
+		</div>
+
+		<script>
+			const vm = new Vue({
+				el: ".root",
+				methods: {
+					showInfo(event) {
+						alert("你好!!!");
+					},
+
+					showInfo1(event) {
+						alert("showInfo1");
+					},
+
+					showInfo2(event) {
+						alert("showInfo2");
+					},
+
+					showMsg1(event) {
+						console.log(div1);
+						//alert("showMsg1");
+					},
+
+					showMsg2(event) {
+						console.log(div2);
+						//alert("showMsg2");
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

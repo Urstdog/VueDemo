@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>插值语法实现</title>
+		<script src="../../js/vue.js"></script>
+	</head>
+	<body>
+		<div class="root">
+			姓: <input type="text" v-model:value="firstName" /><br /><br />
+			名: <input type="text" v-model:value="lastName" /><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			<!-- 下面的fullName不会再调用get方法,第一次调用时会建立缓存 -->
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+			姓名: <span>{{fullName}}</span><br /><br />
+		</div>
+
+		<script>
+			const vm = new Vue({
+				el: ".root",
+				data: {
+					firstName: "张",
+					lastName: "三",
+				},
+				computed: {
+					//fullName 是计算属性
+					//vm调用fullName的get方法得到返回值, 然后创建一个fullName属性,并把返回值赋值给他
+					fullName: {
+						// get什么时候调用?
+						// 第一次读取fullName时调用, 当计算属性fullName所依赖的属性发生变化时调用
+						get() {
+							console.log("get方法被调用");
+							return this.firstName.slice(0, 3) + "-" + this.lastName;
+						},
+						set(value) {
+							console.log("set被调用, value = " + value);
+							const arr = value.split("-");
+							this.firstName = arr[0];
+							this.lastName = arr[1];
+						},
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

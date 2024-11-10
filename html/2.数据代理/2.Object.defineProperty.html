@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="../js/vue.js"></script>
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="root"></div>
+
+		<script>
+			let number = 18;
+			let person = {
+				name: "huang peng hui",
+				sex: "男",
+				// age: number,//后续number值改变,person对象中的age值并不会跟着改变
+			};
+			//向Person对象新增一个属性, 并赋值, 参数: (对象, 属性, 配置项)
+			Object.defineProperty(person, "age", {
+				// value: 20, //不可以枚举
+				// enumerable: true, //设置是否可以枚举,默认值 false 控制台打印['name', 'sex', 'age']
+				// writable: true, //控制属性是否可以被修改,默认值 false
+				// configurable: true, //控制属性是否可以被删除, 默认值false
+
+				// get: function () {
+				// 	return 80;
+				// },
+				//简写
+				//当读取person中的age属性时,该函数被调用, 且返回 age 的值
+				get() {
+					console.log("有人读取age的值");
+					return number;
+				},
+				//有人修改age的值的时候会调用该函数,接收到修改的值
+				set(value) {
+					console.log("有人修改age的值");
+					number = value;
+				},
+				//都是通过操作number的值实现的
+			});
+
+			console.log(Object.keys(person)); //控制台打印: ['name', 'sex']
+		</script>
+	</body>
+</html>

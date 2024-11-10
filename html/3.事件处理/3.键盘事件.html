@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="../../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- Vue中常用的按键别名
+		回车 enter
+		删除 delete
+		退出 esc
+		空格 space 
+		也可以通过 Vue.config.keyCodes.huiChe = 13; 自定义按键别名
+		-->
+		<div class="root">
+			<h1>欢迎来到{{name}}</h1>
+			<input type="text" placeholder="按回车输出" @keyup.enter="showInfo" />
+		</div>
+
+		<script>
+			
+			new Vue({
+				el: ".root",
+				data: {
+					name: "黄鹏辉",
+				},
+				methods: {
+					showInfo(e) {
+						//if (e.keyCode !== 13) return;
+						console.log(e.target.value);
+						console.log(e.key, e.keyCode); //输出 (按键名, 按键值)
+						//console.log(e.keyCode); //键盘对应的值 enter == 13
+						//console.log(e.target.value);
+					},
+				},
+			});
+		</script>
+	</body>
+</html>

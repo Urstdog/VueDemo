@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="../../js/vue.js"></script>
+	</head>
+	<body>
+		<div class="root">
+			<h1>欢迎来到{{name}}</h1>
+			<!-- <button v-on:click="showInfo">点我去学习</button> -->
+			<!-- 简写 -->
+			<button @click="showInfo1">点我去学习1</button>
+			<button @click="showInfo2(100,$event)">点我去学习2</button>
+		</div>
+        <!-- 总结:
+        1.通过 v-on:xxx 绑定事件,可以简写 @xxx
+        2.vue中的函数写在methods属性中
+        3.函数(无参)默认传参数 event
+        4.函数(有参数),要用 $event占位符进行传参, 否则默认不会传入参数
+        -->
+		<script>
+			const vm = new Vue({
+				el: ".root",
+				data: {
+					name: "我的世界",
+				},
+				methods: {
+					showInfo1(event) {
+						//event.target 得到 <button>点我去学习</button>
+						//event.target.innerText 得到 点我去学习
+						console.log(event.target.innerText);
+						console.log(this); //this是vue实例
+						alert("你好!");
+					},
+					showInfo2(number, event) {
+                        console.log(event.target.innerText);
+						alert("number = " + number);
+					},
+				},
+			});
+		</script>
+	</body>
+</html>
