@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+    <style>
+        .basic {
+            width: 400px;
+            height: 300px;
+            border: 1px solid black;
+        }
+
+        .normal {
+            font-size: 30px;
+            background-color: blue;
+        }
+
+        .happy {
+            text-align: center;
+            line-height: 300px;
+            background-color: blue;
+        }
+
+        .sad {
+            background-color: blue;
+            border-radius: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root">
+        <!--  :class ==> v-bind:class -->
+        <!-- 绑定class样式, 字符串写法, 适用于: 样式的类名不确定的情况 -->
+        <div class="basic" :class="name" @click="changeModel">test</div> <br><br>
+
+        <!-- 绑定class样式, 数组写法, 适用于: 样式的类名确定, 样式的个数不确定 -->
+        <div class="basic" :class="classArr">test</div><br><br>
+
+        <!-- 绑定class样式 对象写法, 适用于: 样式的类名确定, 样式的个数确定, 样式用不用不确定-->
+        <div class="basic" :class="classObj">test</div><br><br>
+        
+        <!-- 绑定行内css样式, 对象写法, 对象中的属性要是小驼峰命名法 如: font-size ==> fontSize -->
+        <div class="basic" :style="styleObj">test</div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '.root',
+            data: {
+                name: "normal",
+
+                //可以通过 vm.classArr.shift() 删除数组头元素, push()添加数组头元素, 来控制样式
+                classArr: ['sad', 'happy', 'normal'],
+
+                //通过改变classObj对象中的属性的boolean值来来改变样式
+                classObj: {
+                    normal: false,
+                    happy: false,
+                    sad: false,
+                },
+
+                //css行内样式
+                styleObj: {
+                    //font-size ==> fontSize
+                    fontSize: '100px',
+                }
+            },
+            methods: {
+                changeModel() {
+                    const arr = ['normal', 'happy', 'sad'];
+                    const index = Math.floor(Math.random() * 3);
+                    console.log("改变 style = " + arr[index]);
+                    this.name = arr[index];
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

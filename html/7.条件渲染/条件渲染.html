@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+
+        <!--  v-show 表达式结果为false 在浏览器中 display = "none", 没有完全消失 -->
+        <h2 v-show="true">欢迎来到{{name}}(v-show)</h2>
+        <h2 v-show="1 === 2">欢迎来到{{name}}(v-show)</h2>
+
+        <!-- v-if 表达式结果为false,在浏览器中完全消失(操作DMO结点,新增或删除,性能低), 就没有这段代码 -->
+        <h2 v-if="false">欢迎来到{{name}}(v-if)</h2>
+        <h2 v-if="2 === 2">欢迎来到{{name}}(v-if)</h2>
+
+        <h2>n = {{n}}</h2>
+        <button @click="n++">点我n + 1</button>
+
+        <h2 v-show="n == 1">n == 1</h2>
+        <h2 v-show="n == 2">n == 2</h2>
+        <h2 v-show="n == 3">n == 3</h2>
+
+
+        <!-- 中间不能被打断, 要是一个整体 类似与  
+         if(n == 1){
+            
+           }else if(n == 2){
+             
+             }else{
+
+        }
+          -->
+        <h2 v-if="n == 1">java</h2>
+        <h2 v-else-if="n == 2">c语言</h2>
+        <h2 v-else-if="n == 3">python</h2>
+        <h2 v-else>vue</h2>
+
+        <!-- 当 n == 1时,显示下面啥三个东西, 但是太麻烦了,每一个都要判断 -->
+        <h2 v-show="n == 1">兰考</h2>
+        <h2 v-show="n == 1">开封</h2>
+        <h2 v-show="n == 1">郑州</h2>
+
+        <!-- 会破坏结构,多出一个div -->
+        <div v-show=" n == 1">
+            <h2>兰考</h2>
+            <h2>开封</h2>
+            <h2>郑州</h2>
+        </div>
+
+        <!-- 不会破坏结构, 会自动消除,但是只能配合v-if使用 -->
+        <template v-if="n == 1">
+            <h2>兰考</h2>
+            <h2>开封</h2>
+            <h2>郑州</h2>
+        </template>
+
+    </div>
+
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                name: '我的世界',
+                n: 0,
+            }
+        })
+    </script>
+</body>
+
+</html>

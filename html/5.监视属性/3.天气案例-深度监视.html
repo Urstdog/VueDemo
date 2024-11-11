@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+  </head>
+  <body>
+    <div class="root">
+      <h2>今天天气很{{info}}</h2>
+      <button @click="changeInfo">点击按钮切换天气</button>
+      <h2>number.a = {{number.a}}</h2>
+      <button @click="number.a++">点击改变a的值</button>
+      <h2>number.b = {{number.b}}</h2>
+      <button @click="number.b++">点击改变b的值</button><br /><br />
+      <button @click="number = {a:666,b:888}">点击改变整个number对象</button>
+    </div>
+    <script>
+      const vm = new Vue({
+        el: ".root",
+        data: {
+          isHot: true,
+          number: {
+            a: 1,
+            b: 1,
+          },
+        },
+        methods: {
+          changeInfo() {
+            this.isHot = !this.isHot;
+          },
+        },
+        //计算属性
+        computed: {
+          info() {
+            return this.isHot == true ? "炎热" : "凉爽";
+          },
+        },
+        watch: {
+          //简写, 为简写前应该是 "number":{}
+          //深度监视,监视一个对象中的某一个属性有没有发生改变,不管多深都能监视到
+          number: {
+            deep: true, //开关
+            handler() {
+              console.log("number对象中某一个值发生改变");
+            },
+          },
+          //监视number中a, 必须要用引号或双引号包裹
+          "number.a": {
+            handler(newValue, oldValue) {
+              console.log("number.a改变了, a = " + newValue);
+            },
+          },
+          //监视number中b
+          "number.b": {
+            handler(newValue, oldValue) {
+              console.log("number.b改变了, b = " + newValue);
+            },
+          },
+        },
+      });
+      //写法二: 不知道要检测是哪一个属性, 根据用户的具体行为调整检测的属性
+      vm.$watch("isHot", {
+        //immediate: true,
+        handler(newValue, oldValue) {
+          console.log("handler被调用" + "newValue = " + newValue + ", " + "oldValue = " + oldValue);
+        },
+      });
+    </script>
+  </body>
+</html>

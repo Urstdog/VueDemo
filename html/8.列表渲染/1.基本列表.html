@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <ul>
+            <!-- 
+            <li v-for="p in personList">
+                {{p.name}} - {{p.age}}
+            </li> 
+            -->
+
+            <!-- 
+            :key == v-bind, 用于区分不同的 p 
+            <li v-for="p in personList" :key="p.id">
+                {{p.name}} - {{p.age}}
+            </li> 
+            -->
+            <h2>v-for使用</h2>
+            <!--  遍历数组 (p,index) == (遍历的数组,数组下标) -->
+            <li v-for="(p,index) in personList" :key="index">
+                {{p.name}} - {{p.age}}
+            </li>
+            <br>
+            <!-- 遍历对象 (参数1,参数2) == (属性,值)-->
+            <li v-for="(value,key) in phone " :key="key">
+                {{key}} - {{value}}
+            </li>
+            <br>
+            <!-- 遍历字符串 (参数1,参数2) == (char,index) -->
+            <li v-for="(char,index) in str" :key="index">
+                {{index}}-{{char}}
+            </li>
+
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                // person数组
+                personList: [
+                    { id: '001', name: '张三', age: 19 },
+                    { id: '002', name: '李四', age: 20 },
+                    { id: '003', name: '王五', age: 28 }
+                ],
+                // phone对象
+                phone: {
+                    name: '红米k50',
+                    memory: '16GB',
+                    storage: '256GB',
+                    weight: '223g'
+                },
+                //string 字符串
+                str: "abcdefgh"
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="../../js/vue.js"></script>
+	</head>
+	<body>
+		<div class="root">
+			<h2>今天天气很{{info}}</h2>
+			<!-- <button @click="changeInfo">点击按钮切换天气</button> -->
+             <!-- @xxx="yyy" yyy可以是一句简单代码, 不用再用函数 -->
+			<button @click="isHot = !isHot">点击按钮切换天气</button>
+		</div>
+		<script>
+			new Vue({
+				el: ".root",
+				data: {
+					isHot: true,
+				},
+				methods: {
+					// changeInfo() {
+					// 	this.isHot = !this.isHot;
+					// },
+				},
+                //计算属性
+				computed: {
+					info() {
+						return this.isHot == true ? "炎热" : "凉爽";
+					},
+				},
+			});
+		</script>
+	</body>
+</html>
