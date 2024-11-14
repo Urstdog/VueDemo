@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <ul>
+            <h2>5.更新时的一个问题</h2>
+            <button @click="updateMei">点我更新马冬梅</button>
+            <li v-for="(p,index) in personList" :key="index">
+                {{p.name}} - {{p.age}} - {{p.sex}}
+            </li>
+            <br>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                // person数组
+                personList: [
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '003', name: '周冬雨', age: 28, sex: '女' },
+                    { id: '004', name: '黄鹏伦', age: 30, sex: '男' },
+                    { id: '002', name: '周杰伦', age: 20, sex: '男' }
+                ],
+            },
+            methods: {
+                updateMei() {
+                    //可以正常更新数据并立刻在浏览器中更新显示最新数据
+                    // this.personList[0].name = '马化腾';
+                    // this.personList[0].age = '50';
+                    // this.personList[0].sex = '男';
+
+                    //下面直接替换一个对象, 但浏览器中的数据并没有更新显示
+                    //而Vue开发者工具中的刷新,却可以看到最新数据
+                    this.personList[0] = { id: '001', name: '马化腾', age: 50, sex: '男' };
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <ul>
+            <h2>v-for使用(列表过滤)</h2>
+            <input type="text" v-model:value="keyword">
+            <button @click="sortType = 0">原顺序</button>
+            <button @click="sortType = 1">年龄升序</button>
+            <button @click="sortType = 2">年龄降序</button>
+            <br><br>
+            <!--  遍历数组 (p,index) == (遍历的数组,数组下标) -->
+            <li v-for="(p,index) in filPersonList" :key="index">
+                {{p.name}} - {{p.age}} - {{p.sex}}
+            </li>
+            <br>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                // person数组
+                personList: [
+                    { id: '003', name: '周冬雨', age: 28, sex: '女' },
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '003', name: '黄鹏伦', age: 30, sex: '男' },
+                    { id: '002', name: '周杰伦', age: 20, sex: '男' }
+                ],
+                keyword: '',
+                sortType: 0 // 0 原顺序 1 年龄升序 2 年龄降序
+            },
+            computed: {
+                filPersonList() {
+                    //获得过滤后的数组
+                    const arr = this.personList.filter((p) => {
+                        return p.name.indexOf(this.keyword) !== -1;
+                    })
+                    //判断排序条件
+                    //sortType !== 非零 为真
+                    if (this.sortType) {
+                        // p1 - p2 升序 ==> 小到大
+                        // p2 - p3 降序 ==> 大到小
+                        return arr.sort((p1, p2) => {
+                            return this.sortType === 1 ? p1.age - p2.age : p2.age - p1.age;
+                        })
+                    }
+                    //sortType === 0 不排序
+                    return arr;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

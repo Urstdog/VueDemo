@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <ul>
+            <h2>v-for使用(列表过滤)</h2>
+            <input type="text" v-model:value="keyword"><br><br>
+            <!--  遍历数组 (p,index) == (遍历的数组,数组下标) -->
+            <li v-for="(p,index) in filPersonList" :key="index">
+                {{p.name}} - {{p.age}} - {{p.sex}}
+            </li>
+            <br>
+        </ul>
+    </div>
+    <script>
+        //watch 实现
+        /* new Vue({
+            el: '.root',
+            data: {
+                // person数组
+                personList: [
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '002', name: '周杰伦', age: 20, sex: '男' },
+                    { id: '003', name: '周冬雨', age: 28, sex: '女' },
+                    { id: '003', name: '黄鹏伦', age: 30, sex: '男' }
+                ],
+                filPersonList: [],
+                keyword: ''
+            },
+            watch: {
+                //"abc".indexOf('x') return -1;
+                //"abc".indexOf('a') return 0;
+                //"abc".indexOf('b') return 1;
+                //匹配空串也是返回 0
+                //"abc".indexOf('') return 0;
+                //返回 -1 表示没有匹配到
+                keyword: {
+                    immediate: true,//一加载就执行一次, 匹配空串,返回所有
+                    handler(value) {
+                        this.filPersonList = this.personList.filter((p) => {
+                            //过滤条件
+                            return p.name.indexOf(value) !== -1;
+                        })
+                }
+                }
+            }
+        }) */
+        new Vue({
+            el: '.root',
+            data: {
+                // person数组
+                personList: [
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '002', name: '周杰伦', age: 20, sex: '男' },
+                    { id: '003', name: '周冬雨', age: 28, sex: '女' },
+                    { id: '003', name: '黄鹏伦', age: 30, sex: '男' }
+                ],
+                keyword: ''
+            },
+            computed: {
+                //计算属性的get()方法什么时候调用?
+                //1.刚开始加载的时候调用一次
+                //2.计算属性所依赖的属性发生了改变的时候调用
+                filPersonList() {
+                    //返回计算属性
+                    return this.personList.filter((p)=>{
+                        //返回过滤之后的
+                        return p.name.indexOf(this.keyword) !== -1;
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

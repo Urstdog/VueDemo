@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <script>
+        相当于Vue对象中的data
+        let data = {
+            name: '黄鹏辉',
+            age: 20
+        }
+        //创建一个观察者对象
+        const obs = new Observer(data);
+
+        console.log(obs)
+        //模拟vue对象
+        let vm = {};
+        //模拟实现vue中的_data 
+        vm._data = data = obs;
+
+        //观察者对象的构造函数
+        function Observer(obj) {
+            //得到 对象的所有key
+            const keys = Object.keys(obj);
+            //遍历keys
+            keys.forEach((key) => {
+                //重新定义属性
+                Object.defineProperty(this, key, {
+                    get() {
+                        return obj[key];
+                    },
+                    set(val) {
+                        console.log('set方法被调用,开始解析模版,生成虚拟DMO结点, 对比虚拟DMO结点, 生成真实DMO节点');
+                        obj[key] = val;
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
