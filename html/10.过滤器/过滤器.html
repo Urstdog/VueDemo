@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/dayjs.min.js"></script>
+</head>
+
+<body>
+    <!-- 
+    过滤器: 用于对数据进行格式化处理后再显示,适用于数据的简单处理
+           没有改变原数据,显示的是新数据
+     -->
+    <div class="root">
+        <h2>显示当前时间</h2>
+        <h4>computed计算属性实现: {{fmtTime}}</h4>
+        <!-- 函数必须要带() -->
+        <h4>methods实现: {{getFmtTime()}}</h4>
+        <!-- timeFormatter接受到 time 参数, 然后函数结束返回值赋值给time,显示-->
+        <h4>过滤器filter实现: {{time | timeFormatter}}</h4>
+        <!-- 过滤器第一个参数一定是 time, 虽然没有写 -->
+        <!-- 
+        过滤器链:time | timeFormatter("YYYY_MM_DD") | mySlice() 
+        time参数传给 timeFormatter()
+        timeFormatter()的返回值传给 mySlice()
+        mySlice()的返回值传给 time
+        -->
+        <h4>过滤器filter实现(过滤器传参数, 过滤器链): {{time | timeFormatter("YYYY_MM_DD") | mySlice()}}</h4>
+        <h4>全局过滤器: {{time | timeFormatter() | hello}}</h4>
+    </div>
+
+    <script>
+        //全局过滤器
+        Vue.filter("hello", function (value) {
+            return value + ", 你好!!!";
+        })
+
+        const vm = new Vue({
+            el: '.root',
+            data: {
+                time: 1731688429927,
+            },
+            computed: {
+                fmtTime() {
+                    console.log(Date.now());
+                    //不传参数默认最新时间
+                    return dayjs(this.time).format("YYYY-MM-DD HH:mm:ss");
+                }
+            },
+            methods: {
+                getFmtTime() {
+                    return dayjs().format("YYYY-MM-DD HH:mm:ss");
+                }
+            },
+            //局部过滤器, 只能这个vue实例能用, 其他vue实例不能使用
+            filters: {
+                //str默认参数
+                //如果str没有传参数, 默认值: "YYYY-MM-DD HH:mm:ss"
+                timeFormatter(value, str = "YYYY-MM-DD HH:mm:ss") {
+                    return dayjs(value).format(str);
+                },
+                //切割
+                mySlice(value) {
+                    //切割前4位
+                    return value.slice(0, 4);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

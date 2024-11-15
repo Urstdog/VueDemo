@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <!-- 
+        @submit: 点击提交按钮触发函数
+        @submit.prevent: 因为提交后会默认刷新页面, prevent是阻止默认事件触发
+        v-model.trim: 去掉字符串前后空格
+        v-model.lazy: 懒加载, 当失去鼠标焦点的一瞬间, 就进行视图更新数据
+        v-model.number: 输入的数据转化为number数据类型 如 '123' -> 123; "12b3" -> 12
+        -->
+        <form @submit.prevent="submit">
+            账号: <input type="text" v-model.trim="userInfo.account"> <br><br>
+            密码: <input type="password" v-model="userInfo.password"><br><br>
+            <!-- 
+            type="number" : 控制键盘只能输入数字
+            v-model.number: 控制写入的value值类型是 number , 不能是 string类型
+             -->
+            年龄: <input type="number" v-model.number="userInfo.age"><br><br>
+            性别:
+            男<input type="radio" name="sex" checked value="male" v-model="userInfo.sex">
+            女<input type="radio" name="sex" value="female" v-model="userInfo.sex"> <br><br>
+            爱好:
+            <!-- 
+                多选框checkbox要自己配置value属性, 
+                收集的数据类型不是数组, 收集的数据类型是 boolean,类型
+                是数组, 收集的数据类型是 value组成的数组类型
+                vue实例中的存放数据的属性还要是数组类型,
+                用于存放多个值
+                 -->
+            学习<input type="checkbox" name="hobby" value="study" v-model="userInfo.hobby">
+            打游戏<input type="checkbox" name="hobby" value="game" v-model="userInfo.hobby">
+            睡觉<input type="checkbox" name="hobby" value="sleep" v-model="userInfo.hobby">
+            <br><br>
+            所属校区:
+            <select v-model="userInfo.campus">
+                <option value="">选择校区</option>
+                <option value="east_campus">东校区</option>
+                <option value="west_campus">西校区</option>
+                <option value="sancai_campus">三彩校区</option>
+            </select>
+            <br><br>
+            其他信息:
+            <textarea v-model.lazy="userInfo.other"></textarea>
+            <br><br>
+            <!-- 只有一个多选框, 没有配置value, 收集的数据类型是 boolean类型
+                 不需要配置 value属性, 
+                 因为不需要读取value中的值, 
+                 只需要判断是否选中 true or false -->
+            <input type="checkbox" v-model="userInfo.agree">阅读并接受<a href="http://www.urstdog.github.io">《用户协议》</a>
+            <br><br>
+            <button>submit</button>
+        </form>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '.root',
+            data: {
+                userInfo: {
+                    account: '',
+                    password: '',
+                    sex: '',
+                    age: '',
+                    hobby: [],
+                    campus: '',
+                    other: '',
+                    agree: '' // true or false
+                }
+            },
+            methods: {
+                submit() {
+                    console.log(JSON.stringify(this.userInfo));
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
