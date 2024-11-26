@@ -14,11 +14,11 @@
 			let person = {
 				name: "huang peng hui",
 				sex: "男",
-				// age: number,//后续number值改变,person对象中的age值并不会跟着改变
+				// age: number,//后续number值改变,person对象中的age值并不会跟着改变(值传递)
 			};
 			//向Person对象新增一个属性, 并赋值, 参数: (对象, 属性, 配置项)
 			Object.defineProperty(person, "age", {
-				// value: 20, //不可以枚举
+				// value: 20, 
 				// enumerable: true, //设置是否可以枚举,默认值 false 控制台打印['name', 'sex', 'age']
 				// writable: true, //控制属性是否可以被修改,默认值 false
 				// configurable: true, //控制属性是否可以被删除, 默认值false

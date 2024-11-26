@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <h2>n = <span v-text="n"></span></h2>
+        <h2>n值放大10倍后的值: <span v-big="n">{{n}}</span></h2>
+        <button @click="n++">点我n + 1</button>
+        <input type="text" v-fbind="n">
+    </div>
+
+    <script>
+
+        //定义全局指令
+        //1.函数式写法
+        Vue.directive('big',function(element,binding){
+            console.log(element);
+            console.log(binding);
+            //binding.value 指令绑定的值
+            element.innerText = binding.value * 10;
+        })
+
+        //2.对象式写法
+        Vue.directive('fbind',{
+            bind(element, binding) {
+                element.value = binding.value;
+            },
+            inserted(element, binding) {
+                element.focus();//获得焦点
+            },
+            update(element, binding) {
+                element.value = binding.value;
+            }
+        })
+        new Vue({
+            el: '.root',
+            data: {
+                n: 1
+            },
+            directives: {
+                //element: 指令要绑定的HTMl标签,真实DMO元素,这里是<span> </span>
+                //binding: 自定义的指令
+                //big函数什么时候被调用? 
+                //1. 初始化时被调用
+                //2. 当vue实例重新解析时被调用
+                big(element, binding) {
+                    console.log(element);
+                    console.log(binding);
+                    //binding.value 指令绑定的值
+                    element.innerText = binding.value * 10;
+                },
+                //fbind : 页面一开始就获得焦点
+                fbind: {
+                    bind(element, binding) {
+                        element.value = binding.value;
+                    },
+                    inserted(element, binding) {
+                        element.focus();//获得焦点
+                    },
+                    update(element, binding) {
+                        element.value = binding.value;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

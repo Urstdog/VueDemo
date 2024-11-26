@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+<body>
+    <div class="root">
+        <!--
+         v-once: 在结点初始化渲染后就 视为静态内容
+         以后数据改变就不会引起 动态内容响应式更新
+         -->
+        <h2 v-once>n的初始值: {{n}}</h2>
+        <h2>当前n值是: {{n}}</h2>
+        <button @click="n++">点我 n + 1</button>
+    </div>
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                n: 1
+            }
+        })
+    </script>
+</body>
+
+</html>
