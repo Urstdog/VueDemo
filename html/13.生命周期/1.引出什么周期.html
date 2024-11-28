@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 标题透明度逐渐从 1 -> 0 循环变化 -->
+    <div class="root">
+        <!-- 1.正常样式 -->
+        <h2 style="opacity: 0.5;">生命周期(正常)</h2>
+        <!-- 2.绑定行内css样式 -->
+        <!-- <h2 :style="{opacity:opacity}">生命周期(绑定行内css样式)</h2> -->
+        <!-- 3.简写, 属性名(1)和对象名(2)相同 -->
+        <h2 :style="{opacity}">生命周期(绑定行内css样式,简写)</h2>
+    </div>
+    <script>
+        new Vue({
+            el: '.root',
+            data: {
+                opacity: 1
+            },
+            methods: {
+            },
+            //vue解析完模版, 第一次将真实的DMO元素放入到页面中(挂载完毕),调用mounted
+            //在一整个vue生命周期中只会执行一次,后续值发生改变重新解析，生成真实DMO不会调用
+            mounted() {
+                //定时器
+                console.log('开启一个定时器')
+                setInterval(() => {
+                    this.opacity = this.opacity - 0.01;
+                    if (this.opacity <= 0) {
+                        this.opacity = 1;
+                    }
+                }, 10);
+            },
+        })
+    </script>
+</body>
+
+</html>

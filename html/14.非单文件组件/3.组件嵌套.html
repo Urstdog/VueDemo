@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <school></school>
+    </div>
+    <script>
+        //子组件
+        const college = {
+            template: `
+            <div>
+            <h2>学院名称: {{name}}</h2>
+            <h2>学院年龄: {{age}}</h2>
+            </div>
+            `,
+            data() {
+                return {
+                    name: '信工学院',
+                    age: 20
+                }
+            },
+        }
+        //父组件
+        const school = {
+            template: `
+                <div>
+                    <h2>学校名称: {{name}}</h2>
+                    <h2>学校地址 {{address}}</h2>
+                    <!-- 局部注册组件-->
+                    <college></college>
+                </div>
+            `,
+            data() {
+                return {
+                    name: '郑州商学院',
+                    address: '郑州市巩义市'
+                }
+            },
+            //注册组件
+            components: {
+                college
+            }
+        }
+        new Vue({
+            el: '.root',
+            components: {
+                school
+            }
+        })
+    </script>
+</body>
+
+</html>

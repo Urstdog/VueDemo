@@ -1,0 +1,39 @@
+
+1、注册的组件名如果是一个单词，可以首字母大写和小写
+	1、<school></school>
+	2、<School></School>
+
+2、如果是多个字母组成
+	1、<myschool></myschool>     (不推荐)
+	2、<my-school></my-school>   (中间用“-”分割)， 在components中注册组件时，'my-school': my-school
+	3、<MySchool></MySchool>     (大驼峰命名，必须在脚手架环境里使用)
+
+3、单个闭合标签，如<school/>，必须在脚手架环境里使用
+
+4、创建组件的简写方式
+(1)正常情况： 
+const school = Vue.extend({
+	template: `
+	<div>
+		内容
+	</div>
+	`,
+	data(){
+		return{
+			对象内容
+		}
+	}
+})
+(2)简写： 直接写成对象形式，在注册组件时，会检测是vue实例还是一个普通的js对象，是js对象就会调一次Vue.extend()方法
+const school = {
+	template: `
+	<div>
+		内容
+	</div>
+	`,
+	data(){
+		return{
+			对象内容
+		}
+	}
+}

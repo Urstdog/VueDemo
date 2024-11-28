@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+    <div class="root">
+        <!-- 3.使用组件 -->
+        <school></school>
+        <hr>
+        <student></student>
+        <hello></hello>
+    </div>
+
+    <script>
+
+        //使用组件
+        //1.创建组件
+        const school = Vue.extend({
+            //不能用el绑定, 使用该组件时引入即可
+            template: `
+            <div>
+            <h2>学校名称: {{schoolName}}</h2>
+            <h2>学校地址: {{schoolAddress}}</h2>    
+            </div>
+            `,
+            data() {//返回一个对象
+                return {
+                    schoolName: '郑州商学院',
+                    schoolAddress: '河南省郑州市巩义市郑州商学院',
+                }
+            },
+        })
+        //创建一个学生组件
+        const student = Vue.extend({
+            template: `
+            <div>
+            <h2>学生姓名: {{studentName}}</h2>
+            <h2>年龄: {{age}}</h2>    
+            </div>
+            `,
+            data() {
+                return {
+                    studentName: '张三',
+                    age: 20
+                }
+            },
+        })
+        //简写,创建组件
+        //在注册组件的时候会判断,如果是对象, 就调用extend()方法
+        const hello = {
+            template: `
+            <div>
+            <h2>{{hello}}</h2>
+            </div>
+            `,
+            data() {
+                return {
+                    hello: "hello component"
+                }
+            },
+        }
+
+        //全局注册(组件名,组件对象)
+        Vue.component('hello', hello);
+
+        //正常用一个vue实例
+        new Vue({
+            el: '.root',
+            //2.注册组件(局部注册)
+            components: {
+                //school: school,
+                //student: student
+                //简写
+                school,
+                student
+            }
+        })
+    </script>
+</body>
+
+</html>
